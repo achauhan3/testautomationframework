@@ -19,6 +19,9 @@ public class TestStepDef extends BaseClass {
 
     DragDrop dragDrop = new DragDrop(Helper.getDriver());
 
+
+    FileUpload fileUpload = new FileUpload(Helper.getDriver());
+
     @Given("I am on the home page")
     public void i_am_on_the_home_page() {
         System.out.println("I am on the Index page");
@@ -94,6 +97,26 @@ public class TestStepDef extends BaseClass {
     public void iClickOnDraggableItem() {
         Helper.dragDrop(dragDrop.getDraggableItem(), dragDrop.getDropZone());
 
+    }
+
+    @Given("I am on the upload page")
+    public void iAmOnTheUploadPage() {
+        Helper.openPage("https://testpages.herokuapp.com/styled/file-upload-test.html");
+        Helper.driverWaitSeconds(5);
+    }
+
+    @When("I upload the file")
+    public void iUploadTheFile() {
+        fileUpload.uploadFile();
+        Helper.driverWaitSeconds(5);
+    }
+
+    @Then("I press the submit button")
+    public void iPressTheSubmitButton() {
+        fileUpload.selectOption();
+        Helper.driverWaitSeconds(5);
+        fileUpload.clickButton();
+        Helper.driverWaitSeconds(5);
     }
 }
 

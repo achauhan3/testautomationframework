@@ -16,6 +16,12 @@ Feature: This is a sample feature
     When I click on fetch the page values
     Then I validate the values
 
+  @test_upload
+  Scenario: This is sample scenario outline
+    Given I am on the upload page
+    When I upload the file
+    Then I press the submit button
+
   @test_drag
   Scenario: This is sample scenario outline
     Given I am on the drag home page

@@ -1,7 +1,12 @@
 package utils;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.Duration;
 
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -51,6 +56,7 @@ public class Helper {
     public static void driverWaitSeconds(int seconds) {
         try {
             Thread.sleep(seconds * 1000);
+            takeScreenshot();
         } catch (InterruptedException e) {
             System.out.println(e.getMessage());
         }
@@ -58,7 +64,7 @@ public class Helper {
 
     public static void tearDown() {
         if (driver != null) {
-            driver.close();
+            //driver.close();
             driver.quit();
         }
         Helper = null;
@@ -80,5 +86,21 @@ public class Helper {
         Actions action = new Actions(driver);
         action.dragAndDrop(draggableItem, dropZone).build().perform();
         driverWaitSeconds(5);
+    }
+
+    public static void takeScreenshot() {
+
+        TakesScreenshot scrShot = ((TakesScreenshot) driver);
+        File ss1 = scrShot.getScreenshotAs(OutputType.FILE);
+        String fileLocation = System.getProperty("user.dir") + "\\src\\test\\resources\\screenShots\\";
+        try {
+            FileUtils.copyFile(ss1, new File(fileLocation + "screenshot_" + randomNumber() + ".png"));
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private static String randomNumber() {
+        return String.valueOf(System.currentTimeMillis());
     }
 }
