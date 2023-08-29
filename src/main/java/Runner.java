@@ -9,7 +9,7 @@ import org.junit.runner.RunWith;
         , glue = "stepDefs"
         , monochrome = true
         , plugin = {"pretty", "html:target/cucumber-html-report"}
-        , tags = "@test_drag"
+        //, tags = "@test_upload2"
 )
 class Runner {
 

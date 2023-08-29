@@ -1,15 +1,19 @@
 package utils;
 
-import java.time.Duration;
-
+import io.github.bonigarcia.wdm.WebDriverManager;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
+import java.io.File;
+import java.io.IOException;
+import java.time.Duration;
 
 public class Helper {
     private static Helper Helper;
@@ -17,10 +21,18 @@ public class Helper {
     public final static int TIMEOUT = 2;
 
     private Helper() {
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--remote-allow-origins=*");
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver(options);
+        // Section for Chrome Driver
+        //ChromeOptions options = new ChromeOptions();
+        //options.addArguments("--remote-allow-origins=*");
+        //WebDriverManager.chromedriver().setup();
+        //driver = new ChromeDriver(options);
+
+        // Section for Firefox Driver
+        FirefoxOptions options = new FirefoxOptions();
+        //options.addArguments("--remote-allow-origins=*");
+        WebDriverManager.firefoxdriver().setup();
+        driver = new FirefoxDriver(options);
+
         new WebDriverWait(driver, Duration.ofSeconds(TIMEOUT));
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(TIMEOUT));
         driver.manage().window().maximize();
@@ -51,6 +63,7 @@ public class Helper {
     public static void driverWaitSeconds(int seconds) {
         try {
             Thread.sleep(seconds * 1000);
+            takeScreenshot();
         } catch (InterruptedException e) {
             System.out.println(e.getMessage());
         }
@@ -58,7 +71,7 @@ public class Helper {
 
     public static void tearDown() {
         if (driver != null) {
-            driver.close();
+            //driver.close();
             driver.quit();
         }
         Helper = null;
@@ -80,5 +93,21 @@ public class Helper {
         Actions action = new Actions(driver);
         action.dragAndDrop(draggableItem, dropZone).build().perform();
         driverWaitSeconds(5);
+    }
+
+    public static void takeScreenshot() {
+
+        TakesScreenshot scrShot = ((TakesScreenshot) driver);
+        File ss1 = scrShot.getScreenshotAs(OutputType.FILE);
+        String fileLocation = System.getProperty("user.dir") + "\\src\\test\\resources\\screenShots\\";
+        try {
+            FileUtils.copyFile(ss1, new File(fileLocation + "screenshot_" + randomNumber() + ".png"));
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private static String randomNumber() {
+        return String.valueOf(System.currentTimeMillis());
     }
 }
