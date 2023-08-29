@@ -22,6 +22,13 @@ Feature: This is a sample feature
     When I upload the file
     Then I press the submit button
 
+
+  @test_upload2
+  Scenario: This is sample scenario outline
+    Given I am on the upload page
+    When I upload the file using robot class
+    Then I press the submit button
+
   @test_drag
   Scenario: This is sample scenario outline
     Given I am on the drag home page

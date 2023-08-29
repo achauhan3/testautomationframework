@@ -9,6 +9,10 @@ import pageObjects.*;
 import pageObjects.BasicWebPage;
 import utils.Helper;
 
+import java.awt.*;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.KeyEvent;
+
 public class TestStepDef extends BaseClass {
 
     WebDriver driver = Helper.getDriver();
@@ -117,6 +121,24 @@ public class TestStepDef extends BaseClass {
         Helper.driverWaitSeconds(5);
         fileUpload.clickButton();
         Helper.driverWaitSeconds(5);
+    }
+
+    @When("I upload the file using robot class")
+    public void iUploadTheFileUsingRobotClass() throws AWTException {
+        //Click the browse button
+        fileUpload.clickBrowseButton();
+        Helper.driverWaitSeconds(3);
+        Robot rb = new Robot();
+        String path = "C:\\Users\\Abhishek\\Documents\\sample.txt";
+        StringSelection stringSelection = new StringSelection(path);
+        Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stringSelection, null);
+        rb.keyPress(KeyEvent.VK_CONTROL);
+        rb.keyPress(KeyEvent.VK_V);
+        rb.keyRelease(KeyEvent.VK_V);
+        rb.keyRelease(KeyEvent.VK_CONTROL);
+        Helper.driverWaitSeconds(2);
+        rb.keyPress(KeyEvent.VK_ENTER);
+        rb.keyRelease(KeyEvent.VK_ENTER);
     }
 }
 
