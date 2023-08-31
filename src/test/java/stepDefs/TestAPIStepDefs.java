@@ -1,11 +1,14 @@
 package stepDefs;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.testng.Assert;
+import pojo.CreateUsers;
 
 import static io.restassured.RestAssured.given;
 
@@ -18,16 +21,16 @@ public class TestAPIStepDefs {
     }
 
     @When("I send a POST request to endpoint")
-    public void iSendAPOSTRequestToEndpoint() {
+    public void iSendAPOSTRequestToEndpoint() throws JsonProcessingException {
 
+        ObjectMapper objectMapper = new ObjectMapper();
+        String request = objectMapper.writeValueAsString(new CreateUsers("Abhishek", "testing"));
 
-        String request = "{\n" +
-                "    \"name\": \"morpheus\",\n" +
-                "    \"job\": \"leader\"\n" +
-                "}";
+        System.out.println(request);
+
         res = given().contentType(ContentType.JSON)
                 .body(request)
-                .when().get("https://reqres.in/api/users")
+                .when().post("https://reqres.in/api/users")
                 .then().extract().response();
     }
 
@@ -37,5 +40,12 @@ public class TestAPIStepDefs {
         System.out.println(res.asPrettyString());
         Assert.assertEquals(res.getStatusCode(), statusCode);
 
+    }
+
+    @When("I send a GET request to endpoint")
+    public void iSendAGETRequestToEndpoint() {
+        res = given().contentType(ContentType.JSON)
+                .when().get("https://reqres.in/api/users")
+                .then().extract().response();
     }
 }
