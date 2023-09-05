@@ -8,7 +8,7 @@ import io.cucumber.java.en.When;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.testng.Assert;
-import pojo.CreateUsers;
+import pojo.createUsers.CreateUsers;
 
 import static io.restassured.RestAssured.given;
 
@@ -20,11 +20,14 @@ public class TestAPIStepDefs {
         System.out.println("I setup the payload");
     }
 
-    @When("I send a POST request to endpoint")
-    public void iSendAPOSTRequestToEndpoint() throws JsonProcessingException {
+    @When("I send a POST request with {string} {string} to endpoint")
+    public void iSendAPOSTRequestToEndpoint(String name, String job) throws JsonProcessingException {
 
         ObjectMapper objectMapper = new ObjectMapper();
-        String request = objectMapper.writeValueAsString(new CreateUsers("Abhishek", "testing"));
+        CreateUsers cu = new CreateUsers();
+        cu.setName(name);
+        cu.setJob(job);
+        String request = objectMapper.writeValueAsString(cu);
 
         System.out.println(request);
 

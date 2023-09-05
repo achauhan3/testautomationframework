@@ -8,7 +8,13 @@ Feature: This is a sample feature
 
 
   @test_api_post
-  Scenario: This is sample scenario outline
+  Scenario Outline: This is sample scenario outline
     Given I setup the payload
-    When I send a POST request to endpoint
+    When I send a POST request with "<name>" "<job>" to endpoint
     Then the response status should be 201
+
+    Examples:
+      | name  | job   |
+      | test  | test  |
+      | test1 | test1 |
+      | test2 | test2 |

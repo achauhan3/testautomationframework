@@ -1,4 +1,4 @@
-package pojo;
+package pojo.createUsers;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -10,7 +10,8 @@ public class CreateUsers {
     private String name;
     private String job;
 
-
+    public CreateUsers() {
+    }
 
 
     public CreateUsers(String name, String job) throws JsonProcessingException {
@@ -43,7 +44,6 @@ public class CreateUsers {
                 ", job='" + job + '\'' +
                 '}';
     }
-
 
 
 }
