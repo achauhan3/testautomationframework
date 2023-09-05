@@ -1,9 +1,12 @@
+package testing;
+
 import io.cucumber.junit.Cucumber;
-import io.cucumber.junit.CucumberOptions;
+import io.cucumber.testng.CucumberOptions;
+import io.cucumber.testng.AbstractTestNGCucumberTests;
 import org.junit.runner.RunWith;
 
 
-@RunWith(Cucumber.class)
+//@RunWith(Cucumber.class)
 @CucumberOptions(
         features = "src/test/java/feature"
         , glue = "stepDefs"
@@ -11,6 +14,6 @@ import org.junit.runner.RunWith;
         , plugin = {"pretty", "html:target/cucumber-html-report"}
         , tags = "@test_api_post"
 )
-class Runner {
+class Runner extends AbstractTestNGCucumberTests {
 
 }
