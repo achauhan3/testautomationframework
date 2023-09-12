@@ -8,9 +8,11 @@ import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
 import utils.Helper;
 
+import java.net.MalformedURLException;
+
 public class Hooks {
     @Before
-    public static void setUp() {
+    public static void setUp() throws MalformedURLException {
 
         Helper.setUpDriver();
     }

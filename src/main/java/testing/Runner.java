@@ -11,8 +11,8 @@ import org.junit.runner.RunWith;
         features = "src/test/java/feature"
         , glue = "stepDefs"
         , monochrome = true
-        , plugin = {"pretty", "html:target/cucumber-html-report"}
-        , tags = "@test_api_post"
+        , plugin = {"pretty", "html:target/cucumber-html-report.html"}
+        //, tags = "@test_api_post"
 )
 class Runner extends AbstractTestNGCucumberTests {
 
